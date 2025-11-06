@@ -35,9 +35,14 @@ class QuizService {
 
   List<int> generateOptions(int correctSurah, {int count = 4}) {
     final surahs = QuranDataService.getAllSurahs();
+    
+    // Ensure count doesn't exceed available surahs
+    final maxCount = surahs.length;
+    final actualCount = count > maxCount ? maxCount : count;
+    
     final options = <int>[correctSurah];
 
-    while (options.length < count) {
+    while (options.length < actualCount) {
       final randomSurah = surahs[_random.nextInt(surahs.length)];
       if (!options.contains(randomSurah.number)) {
         options.add(randomSurah.number);

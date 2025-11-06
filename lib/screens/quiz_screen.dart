@@ -63,11 +63,10 @@ class _QuizScreenState extends State<QuizScreen> {
       setState(() {
         _hasPlayedOnce = true;
       });
-      // In a real app, this would play the actual audio file
-      // For now, we'll simulate it
+      // Attempt to play the audio file from assets
       await _audioPlayer.play(AssetSource(_currentQuestion.audioPath));
     } catch (e) {
-      // Audio file not found - this is expected in demo mode
+      // Audio file not found - fallback to demo mode
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -200,9 +199,17 @@ class _QuizScreenState extends State<QuizScreen> {
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton.icon(
-                        onPressed: _hasPlayedOnce ? _playAudio : null,
+                        onPressed: _hasPlayedOnce
+                            ? () async {
+                                if (_isPlaying) {
+                                  await _audioPlayer.pause();
+                                } else {
+                                  await _playAudio();
+                                }
+                              }
+                            : null,
                         icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
-                        label: Text(_isPlaying ? 'Playing...' : 'Play Again'),
+                        label: Text(_isPlaying ? 'Pause' : 'Play Again'),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 32,

@@ -1,5 +1,7 @@
 # Hafiz Quiz
 
+🎙️ **Now featuring 18+ Quran reciters from EveryAyah.com!**
+
 A Flutter application designed to test users' Quran knowledge by recognizing ayahs and identifying which surah they belong to.
 
 ## Features

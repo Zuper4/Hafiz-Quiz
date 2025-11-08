@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/quiz_mode.dart';
+import '../l10n/app_localizations.dart';
 import 'home_screen.dart';
 
 class ResultsScreen extends StatelessWidget {
@@ -16,12 +17,13 @@ class ResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final percentage = totalQuestions > 0 ? (score / totalQuestions * 100) : 0;
     final passed = percentage >= 70;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Quiz Results'),
+        title: Text(l10n.quizResults),
         automaticallyImplyLeading: false,
       ),
       body: Container(
@@ -50,7 +52,7 @@ class ResultsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    passed ? 'Congratulations!' : 'Keep Practicing!',
+                    passed ? l10n.excellent : l10n.keepPracticing,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -58,7 +60,7 @@ class ResultsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'You completed ${mode.displayName}',
+                    l10n.questionsAnswered(totalQuestions),
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Theme.of(context)
                               .colorScheme
@@ -75,7 +77,7 @@ class ResultsScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Text(
-                            'Your Score',
+                            l10n.yourScore,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
                           const SizedBox(height: 16),
@@ -91,7 +93,7 @@ class ResultsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            '${percentage.toStringAsFixed(1)}%',
+                            l10n.percentage(percentage.toInt()),
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineMedium
@@ -116,7 +118,7 @@ class ResultsScreen extends StatelessWidget {
                       );
                     },
                     icon: const Icon(Icons.home),
-                    label: const Text('Back to Home'),
+                    label: Text(l10n.backToHome),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                         vertical: 16,
@@ -130,7 +132,7 @@ class ResultsScreen extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     icon: const Icon(Icons.refresh),
-                    label: const Text('Try Again'),
+                    label: Text(l10n.tryAnotherQuiz),
                     style: OutlinedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                         vertical: 16,

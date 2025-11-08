@@ -1,0 +1,108 @@
+{
+  "appTitle": "Hafiz Quiz",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "testYourKnowledge": "Test Your Quran Knowledge",
+  "@testYourKnowledge": {
+    "description": "Main heading on home screen"
+  },
+  "chooseDifficulty": "Choose a difficulty level to begin",
+  "@chooseDifficulty": {
+    "description": "Subheading on home screen"
+  },
+  "easyMode": "Easy Mode",
+  "easyModeDesc": "Guess the Surah from its first ayah",
+  "hardMode": "Hard Mode",
+  "hardModeDesc": "Identify Surah from any random ayah",
+  "practiceMode": "Practice Mode",
+  "practiceModeDesc": "Continue until you guess correctly",
+  "settings": "Settings",
+  "selectReciter": "Select Reciter",
+  "reciterSettings": "Reciter",
+  "languageSettings": "Language",
+  "quizSettings": "Quiz Options",
+  "filterByQuality": "Filter by Quality:",
+  "viewMore": "View More Reciters",
+  "viewLess": "Show Less",
+  "correct": "Correct!",
+  "incorrect": "Incorrect",
+  "theCorrectAnswer": "The correct answer is: {surah}",
+  "@theCorrectAnswer": {
+    "description": "Shows the correct answer",
+    "placeholders": {
+      "surah": {
+        "type": "String"
+      }
+    }
+  },
+  "continue_": "Continue",
+  "tryAgain": "Try Again",
+  "listenToAyah": "Listen to the Ayah",
+  "firstAyah": "First ayah of a Surah",
+  "randomAyah": "Random ayah from a Surah",
+  "playAgain": "Play Again",
+  "pause": "Pause",
+  "whichSurah": "Which Surah is this from?",
+  "score": "Score: {current}/{total}",
+  "@score": {
+    "description": "Current score display",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "endQuiz": "End Quiz",
+  "quizResults": "Quiz Results",
+  "yourScore": "Your Score",
+  "questionsAnswered": "{count} questions answered",
+  "@questionsAnswered": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "percentage": "{percent}%",
+  "@percentage": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "excellent": "Excellent!",
+  "goodJob": "Good Job!",
+  "keepPracticing": "Keep Practicing!",
+  "tryAnotherQuiz": "Try Another Quiz",
+  "backToHome": "Back to Home",
+  "reciterChanged": "Reciter changed to {name}",
+  "@reciterChanged": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "audioLoadFailed": "Failed to load audio: {error}",
+  "@audioLoadFailed": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "inputMode": "Input Mode",
+  "multipleChoice": "Multiple Choice",
+  "textEntry": "Text Entry",
+  "autoNext": "Auto Next Question",
+  "continuousRecitation": "Continuous Recitation",
+  "continuousRecitationDesc": "Keep playing consecutive ayahs until you guess",
+  "searchSurah": "Search Surah...",
+  "enterSurahNumber": "Enter surah number or name",
+  "submit": "Submit"
+}

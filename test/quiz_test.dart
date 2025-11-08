@@ -2,8 +2,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hafiz_quiz/services/quran_data_service.dart';
 import 'package:hafiz_quiz/services/quiz_service.dart';
 import 'package:hafiz_quiz/models/quiz_mode.dart';
+import 'package:shared_preferences_platform_interface/shared_preferences_platform_interface.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  // Set up SharedPreferences mock
+  SharedPreferencesStorePlatform.instance = InMemorySharedPreferencesStore.empty();
+
   group('QuranDataService Tests', () {
     test('Should have 114 surahs', () {
       final surahs = QuranDataService.getAllSurahs();
@@ -44,15 +50,15 @@ void main() {
       quizService = QuizService();
     });
 
-    test('Should generate question for easy mode', () {
-      final question = quizService.generateQuestion(QuizMode.easy);
+    test('Should generate question for easy mode', () async {
+      final question = await quizService.generateQuestion(QuizMode.easy);
       expect(question.ayahNumber, 1); // Easy mode always uses first ayah
       expect(question.surahNumber, greaterThan(0));
       expect(question.surahNumber, lessThanOrEqualTo(114));
     });
 
-    test('Should generate question for hard mode', () {
-      final question = quizService.generateQuestion(QuizMode.hard);
+    test('Should generate question for hard mode', () async {
+      final question = await quizService.generateQuestion(QuizMode.hard);
       expect(question.surahNumber, greaterThan(0));
       expect(question.surahNumber, lessThanOrEqualTo(114));
       expect(question.ayahNumber, greaterThan(0));
@@ -65,11 +71,15 @@ void main() {
       expect(options.toSet().length, 4); // All options should be unique
     });
 
-    test('Generated audio path should be correctly formatted', () {
-      final question = quizService.generateQuestion(QuizMode.easy);
+    test('Generated audio path should be a URL from EveryAyah', () async {
+      final question = await quizService.generateQuestion(QuizMode.easy);
       expect(
         question.audioPath,
-        matches(r'assets/audio/\d+_\d+\.mp3'),
+        startsWith('https://everyayah.com/data/'),
+      );
+      expect(
+        question.audioPath,
+        endsWith('.mp3'),
       );
     });
   });

@@ -2,11 +2,13 @@ import 'dart:math';
 import '../models/quiz_question.dart';
 import '../models/quiz_mode.dart';
 import 'quran_data_service.dart';
+import 'reciter_service.dart';
 
 class QuizService {
   final Random _random = Random();
+  final ReciterService reciterService = ReciterService();
 
-  QuizQuestion generateQuestion(QuizMode mode) {
+  Future<QuizQuestion> generateQuestion(QuizMode mode) async {
     final surahs = QuranDataService.getAllSurahs();
     final randomSurah = surahs[_random.nextInt(surahs.length)];
 
@@ -23,8 +25,9 @@ class QuizService {
         break;
     }
 
-    // Audio path format: assets/audio/{surahNumber}_{ayahNumber}.mp3
-    final audioPath = 'assets/audio/${randomSurah.number}_$ayahNumber.mp3';
+    // Get the selected reciter and generate the audio URL
+    final reciter = await reciterService.getSelectedReciter();
+    final audioPath = reciter.getAudioUrl(randomSurah.number, ayahNumber);
 
     return QuizQuestion(
       surahNumber: randomSurah.number,

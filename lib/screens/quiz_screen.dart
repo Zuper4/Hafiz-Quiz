@@ -372,6 +372,20 @@ class _QuizScreenState extends State<QuizScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                         ),
                       ),
+                      // Manual Next button when continuous recitation is off
+                      if (!_continuousRecitation && !_isAnswered && _hasPlayedOnce) ...[
+                        const SizedBox(height: 12),
+                        OutlinedButton.icon(
+                          onPressed: () async {
+                            await _playNextAyah();
+                          },
+                          icon: const Icon(Icons.skip_next),
+                          label: const Text('Next Ayah'),
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -389,8 +403,16 @@ class _QuizScreenState extends State<QuizScreen> {
               _inputMode == QuizInputMode.multipleChoice
                   ? _buildMultipleChoiceInput()
                   : _buildTextEntryInput(l10n),
-              // Show result after answer
-              if (_isAnswered) _buildResultCard(l10n, correctSurah),
+              // Show result after answer (but not in practice mode when wrong)
+              if (_isAnswered && 
+                  !(widget.mode == QuizMode.practice && 
+                    _selectedAnswer != _currentQuestion.surahNumber)) 
+                _buildResultCard(l10n, correctSurah),
+              // In practice mode, show error message without revealing answer
+              if (_isAnswered && 
+                  widget.mode == QuizMode.practice && 
+                  _selectedAnswer != _currentQuestion.surahNumber)
+                _buildPracticeModeErrorCard(l10n),
             ],
           ),
         ),
@@ -512,6 +534,56 @@ class _QuizScreenState extends State<QuizScreen> {
                   child: Text(l10n.continue_),
                 ),
               ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPracticeModeErrorCard(AppLocalizations l10n) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Card(
+        color: Colors.red.withOpacity(0.2),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.cancel,
+                    color: Colors.red,
+                    size: 32,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    l10n.incorrect,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Listen again and try another answer',
+                style: Theme.of(context).textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _isAnswered = false;
+                    _selectedAnswer = null;
+                  });
+                },
+                child: Text(l10n.tryAgain),
+              ),
             ],
           ),
         ),

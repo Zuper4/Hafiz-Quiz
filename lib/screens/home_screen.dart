@@ -74,9 +74,11 @@ class HomeScreen extends StatelessWidget {
                   // Cards
                   LayoutBuilder(
                     builder: (context, constraints) {
-                      // Make cards fit exactly 2 per row with spacing
-                      final cardWidth = (constraints.maxWidth - 48) / 2;
-                      final cardHeight = cardWidth * 1.1;
+                      // Make cards fit 2 per row with spacing, but set minimum size
+                      final availableWidth = constraints.maxWidth - 48;
+                      final cardWidth = availableWidth / 2;
+                      // Make cards taller for better appearance
+                      final cardHeight = cardWidth * 1.3;
 
                       return Wrap(
                         spacing: 24,
